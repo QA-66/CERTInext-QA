@@ -1,7 +1,10 @@
 
 pipeline {
     agent any
-
+    
+environment {
+    BASE_URL = 'https://qa.certinext.io/'
+}
     options {
         timestamps()
         timeout(time: 60, unit: 'MINUTES')
