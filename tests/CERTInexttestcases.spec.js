@@ -10,7 +10,7 @@ test('Verify CERTInext Dashboard', async ({ page, loginPage }) => {
  await page.locator('#polAddToDraft').click();
 });
 
-test('Verify CERTInext Dashboard', async ({ page, loginPage }) => {
+test('Verify Policy creation',async ({ page, loginPage }) => {
 
   await page.locator("[class='mdi mdi-clipboard-text-outline']").click();
   await page.locator('#plNewPolicyBtn').click();

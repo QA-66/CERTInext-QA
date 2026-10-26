@@ -2,10 +2,17 @@
 pipeline {
     agent any
 
+    options {
+        timestamps()
+        timeout(time: 60, unit: 'MINUTES')
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    credentialsId: 'github-token',
+                    url: 'https://github.com/QA-66/CERTInext-QA.git'
             }
         }
 
@@ -22,15 +29,15 @@ pipeline {
             }
         }
 
-        stage('Install Playwright Browser') {
+        stage('Install Playwright Browsers') {
             steps {
                 bat 'npx playwright install chromium'
             }
         }
 
-        stage('Run Playwright Tests') {
+        stage('Run All Playwright Tests') {
             steps {
-                bat 'npx playwright test tests/CERTInext.spec.js'
+                bat 'npx playwright test'
             }
         }
     }
