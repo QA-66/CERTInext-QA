@@ -1,19 +1,24 @@
 import { chromium, expect } from "@playwright/test";
-require('dotenv').config()
+//require('dotenv').config()
+//const testData=require("./testdata.js");
+
+const BaseUrl = process.env.BASE_URL || "https://qa.certinext.io/";
+const EmailId = process.env.EMAIL_ID;
+const Password = process.env.PASSWORD;
 async function globalsetup() {
 const browser = await chromium.launch({headless: false});
 const context =await browser.newContext();
 const page= await context.newPage();
-await page.goto(process.env.BASE_URL, {
+await page.goto(BaseUrl, {
   waitUntil: 'domcontentloaded',
   timeout: 60000
 });
 await page.locator('#SSOlogin').click();
 //await page.waitForTimeout(3000);
 await page.screenshot({path: 'loginscreen.png'});
-await page.locator('#i0116').fill(process.env.EMAIL_ID);
+await page.locator('#i0116').fill(EmailId);
 await page.getByRole("button",{name:'Next'}).click();
-await page.getByPlaceholder("Password").fill(process.env.PASSWORD);
+await page.getByPlaceholder("Password").fill(Password);
 await page.getByRole("button", {name:'Sign in'}).click();
 await page.getByRole("button", {name: 'Yes'}).click();
 await page.locator('#proceedToLogin3').click();
