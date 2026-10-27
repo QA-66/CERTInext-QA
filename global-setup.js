@@ -4,9 +4,12 @@ async function globalsetup() {
 const browser = await chromium.launch({headless: false});
 const context =await browser.newContext();
 const page= await context.newPage();
-await page.goto(process.env.BASE_URL);
+await page.goto(process.env.BASE_URL, {
+  waitUntil: 'domcontentloaded',
+  timeout: 60000
+});
 await page.locator('#SSOlogin').click();
-await page.waitForTimeout(3000);
+//await page.waitForTimeout(3000);
 await page.screenshot({path: 'loginscreen.png'});
 await page.locator('#i0116').fill(process.env.EMAIL_ID);
 await page.getByRole("button",{name:'Next'}).click();
